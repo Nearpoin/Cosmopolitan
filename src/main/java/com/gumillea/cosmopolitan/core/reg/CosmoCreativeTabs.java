@@ -3,6 +3,7 @@ package com.gumillea.cosmopolitan.core.reg;
 import com.gumillea.cosmopolitan.CosmoConfig;
 import com.gumillea.cosmopolitan.Cosmopolitan;
 import com.gumillea.cosmopolitan.common.item.HerbalFoodItem;
+import com.gumillea.cosmopolitan.core.misc.BerrfectFlavorHelper;
 import com.gumillea.cosmopolitan.core.util.CosmoCompat;
 import com.gumillea.cosmopolitan.core.util.CosmoItemTags;
 import com.gumillea.exquisito.core.ExquisitoConfig;
@@ -26,11 +27,10 @@ public class CosmoCreativeTabs {
         return icon;
     }
 
-    public static final RegistryObject<CreativeModeTab> COSMO_TAB = TABS.register("tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("item_group." + Cosmopolitan.MODID + ".tab"))
-            .icon(CosmoCreativeTabs::ICON)
+    public static final RegistryObject<CreativeModeTab> COSMO_TAB_BLOCK = TABS.register("cosmo_tab_block", () -> CreativeModeTab.builder()
+            .title(Component.translatable("item_group." + Cosmopolitan.MODID + ".tab.blocks"))
+            .icon(() -> new ItemStack(CosmoBlocks.IRON_FROZEN_DESSERT_TUB.get()))
             .displayItems((parameters, output) -> {
-                //BLOCKS
                 output.accept(CosmoBlocks.COPPER_FROZEN_DESSERT_TUB.get());
                 output.accept(CosmoBlocks.IRON_FROZEN_DESSERT_TUB.get());
                 output.accept(CosmoBlocks.NETHERITE_FROZEN_DESSERT_TUB.get());
@@ -39,12 +39,23 @@ public class CosmoCreativeTabs {
                 output.accept(CosmoBlocks.WILDBERRIES_BASKET.get());
                 output.accept(CosmoBlocks.ARBUTUS_BERRIES_BASKET.get());
                 output.accept(CosmoBlocks.GOLDEN_ARBUTUS_BERRIES_BASKET.get());
+                output.accept(CosmoBlocks.WATTLESEED_SACK.get());
                 output.accept(CosmoBlocks.FIDDLEHEAD_CRATE.get());
                 output.accept(CosmoBlocks.IRON_FIDDLEHEAD_CRATE.get());
                 output.accept(CosmoBlocks.TUBER_CRATE.get());
                 output.accept(CosmoBlocks.MASHED_POTATO_BLOCK.get());
-                output.accept(CosmoBlocks.BERRY_SYRUP_BLOCK.get());
+
+                output.accept(CosmoBlocks.SWEET_BERRY_SYRUP_BLOCK.get());
+                if (CosmoConfig.Common.FLAVORED_SYRUP.get()) {
+                    output.accept(CosmoBlocks.SPICY_BERRY_SYRUP_BLOCK.get());
+                    output.accept(CosmoBlocks.SOUR_BERRY_SYRUP_BLOCK.get());
+                    output.accept(CosmoBlocks.BITTER_BERRY_SYRUP_BLOCK.get());
+                    output.accept(CosmoBlocks.STRANGE_BERRY_SYRUP_BLOCK.get());
+
+                }
+
                 output.accept(CosmoBlocks.BIRCH_SAP_BLOCK.get());
+                output.accept(CosmoBlocks.MOLASSES_BLOCK.get());
                 if (CosmoCompat.tf) output.accept(CosmoBlocks.STEELEAF_NECTAR_BLOCK.get());
                 if (CosmoCompat.nea) {
                     if (CosmoConfig.Common.APPLE_FLAVOR.get()) output.accept(CosmoBlocks.APPLE_ICE_CREAM_BLOCK.get());
@@ -60,6 +71,12 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoBlocks.TORCHBERRY_ICE_CREAM_BLOCK.get());
                     }
                     if (CosmoCompat.sd) output.accept(CosmoBlocks.CHERRY_ICE_CREAM_BLOCK.get());
+                    if (CosmoCompat.smc) {
+                        output.accept(CosmoBlocks.ASTERA_ICE_CREAM_BLOCK.get());
+                        output.accept(CosmoBlocks.BROCCOLI_ICE_CREAM_BLOCK.get());
+                        output.accept(CosmoBlocks.FROST_ICE_CREAM_BLOCK.get());
+                        output.accept(CosmoBlocks.RAINBOW_ICE_CREAM_BLOCK.get());
+                    }
 
                     output.accept(CosmoBlocks.ADZUKI_ICE_CREAM_BRICKS.get());
                     output.accept(CosmoBlocks.BANANA_ICE_CREAM_BRICKS.get());
@@ -94,6 +111,8 @@ public class CosmoCreativeTabs {
                     if (CosmoCompat.cr) {
                         output.accept(CosmoBlocks.LIME_ICE_CREAM_BRICKS.get());
                         output.accept(CosmoBlocks.POMEGRANATE_ICE_CREAM_BRICKS.get());
+                        output.accept(CosmoBlocks.PINK_DRAGON_FRUIT_ICE_CREAM_BRICKS.get());
+                        output.accept(CosmoBlocks.LUCUMA_ICE_CREAM_BRICKS.get());
                     }
                     if (CosmoCompat.df) {
                         output.accept(CosmoBlocks.MATCHA_ICE_CREAM_BRICKS.get());
@@ -116,6 +135,12 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoBlocks.GLOWY_ICE_CREAM_BRICKS.get());
                     }
                     if (CosmoCompat.sd) output.accept(CosmoBlocks.CHERRY_ICE_CREAM_BRICKS.get());
+                    if (CosmoCompat.smc) {
+                        output.accept(CosmoBlocks.ASTERA_ICE_CREAM_BRICKS.get());
+                        output.accept(CosmoBlocks.BROCCOLI_ICE_CREAM_BRICKS.get());
+                        output.accept(CosmoBlocks.FROST_ICE_CREAM_BRICKS.get());
+                        output.accept(CosmoBlocks.RAINBOW_ICE_CREAM_BRICKS.get());
+                    }
 
                     output.accept(CosmoBlocks.CHISELED_ADZUKI_ICE_CREAM_BLOCK.get());
                     output.accept(CosmoBlocks.CHISELED_BANANA_ICE_CREAM_BLOCK.get());
@@ -150,10 +175,35 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoItems.DROOPFRUIT_PIPS.get());
                     }
                 }
+                if (CosmoConfig.Common.PLACEABLE_FOOD_SETTING.get() != 0){
+                    output.accept(CosmoItems.JELLY_ROLL.get());
+                    output.accept(CosmoItems.CHOCOLATE_ROLL.get());
+                    output.accept(CosmoItems.INK_ROLL.get());
+                    if (CosmoCompat.ws) output.accept(CosmoItems.YULE_LOG.get());
+
+                    output.accept(CosmoItems.WATER_PIE.get());
+                    output.accept(CosmoItems.MOSS_PIE.get());
+                    if (CosmoCompat.fd) output.accept(CosmoItems.SHOOFLY_PIE.get());
+
+                    output.accept(CosmoItems.WHEATGRASS_CUBECAKE.get());
+                    output.accept(CosmoItems.GLOW_BERRY_CUBECAKE.get());
+                    output.accept(CosmoItems.WARPED_VELVET_CUBECAKE.get());
+                    output.accept(CosmoItems.CHORUS_FRUIT_CUBECAKE.get());
+                }
+            })
+            .build());
+
+    public static final RegistryObject<CreativeModeTab> COSMO_TAB_ITEM = TABS.register("cosmo_tab_item", () -> CreativeModeTab.builder()
+            .title(Component.translatable("item_group." + Cosmopolitan.MODID + ".tab.items"))
+            .icon(CosmoCreativeTabs::ICON)
+            .displayItems((parameters, output) -> {
                 //ITEMS
                 output.accept(CosmoItems.WILDBERRY.get());
                 output.accept(CosmoItems.ARBUTUS_BERRIES.get());
                 output.accept(CosmoItems.GOLDEN_ARBUTUS_BERRIES.get());
+                output.accept(CosmoItems.ENCHANTED_GOLDEN_ARBUTUS_BERRIES.get());
+                if (CosmoConfig.Common.BOILBERRY_CHANCE.get() > 0) output.accept(CosmoItems.BOILBERRY.get());
+                if (CosmoConfig.Common.SPINALBERRY_CHANCE.get() > 0) output.accept(CosmoItems.SPINALBERRY.get());
                 output.accept(CosmoItems.WATTLESEEDS.get());
                 output.accept(CosmoItems.FIDDLEHEAD.get());
                 output.accept(CosmoItems.BAKED_FIDDLEHEAD.get());
@@ -163,17 +213,31 @@ public class CosmoCreativeTabs {
                 output.accept(CosmoItems.IRON_FIDDLEHEAD.get());
                 output.accept(CosmoItems.WHEATGRASS.get());
                 output.accept(CosmoItems.HERBAL_POWDER.get());
+                output.accept(CosmoItems.CHARD.get());
                 output.accept(CosmoItems.TUBER.get());
                 output.accept(CosmoItems.ROASTED_TUBER.get());
                 if (CosmoCompat.fd) {
                     output.accept(CosmoItems.CUT_TUBERS.get());
-                    if (CosmoCompat.cad || CosmoCompat.fcd) output.accept(CosmoItems.TUBER_CHIPS.get());
+                    output.accept(CosmoItems.TUBER_CHIPS.get());
+                    output.accept(CosmoItems.TUBER_CHIP_BAG.get());
 
                     output.accept(CosmoItems.CUT_POTATOES.get());
                     output.accept(CosmoItems.POTATO_WEDGES.get());
                     if (CosmoCompat.cad || CosmoCompat.fcd) output.accept(CosmoItems.POTATO_PANCAKES.get());
+
+                    output.accept(CosmoItems.SUGARCANE_PIECES.get());
+                    output.accept(CosmoItems.BAGASSE.get());
                 }
                 output.accept(CosmoItems.ROASTED_MUSHROOM.get());
+
+                output.accept(CosmoItems.ECTOCARAMEL.get());
+                output.accept(CosmoItems.OCCULT_APPLE.get());
+
+                if (CosmoCompat.fd) output.accept(CosmoItems.MERINGUE.get());
+
+                output.accept(cMilkFood(CosmoItems.PENUCHE.get()));
+                output.accept(CosmoItems.EMERALD_CANDY.get());
+
                 if (CosmoCompat.tf) {
                     output.accept(CosmoItems.AURORA_KOHAKUTOU.get());
                     output.accept(CosmoItems.GLACIER_ESSENCE.get());
@@ -181,35 +245,61 @@ public class CosmoCreativeTabs {
 
                 output.accept(CosmoItems.BUSH_BREAD.get());
                 output.accept(CosmoItems.MEADOW_BREAD.get());
+                output.accept(CosmoItems.GEODE_BREAD.get());
                 output.accept(CosmoItems.BAGEL.get());
-                output.accept(CosmoItems.BAGEL_SANDWICH.get());
-                if (CosmoCompat.fd) output.accept(CosmoItems.BACON_EGG_BAGEL.get());
+                if (CosmoCompat.fd)  {
+                    output.accept(CosmoItems.BAGEL_SANDWICH.get());
+                    output.accept(CosmoItems.BACON_EGG_BAGEL.get());
+                }
                 output.accept(creamyFood(CosmoItems.BERRY_CREAM_CHEESE_BAGEL.get()));
                 if (CosmoCompat.df) output.accept(creamyFood(CosmoItems.MATCHA_CREAM_INK_BAGEL.get()));
                 if (CosmoCompat.nea) output.accept(CosmoItems.NEAPOLITAN_ICE_CREAM_BAGEL.get());
                 output.accept(CosmoItems.WOODLAND_SUB.get());
                 output.accept(CosmoItems.TRAVELERS_PANINI.get());
-                output.accept(CosmoItems.FLYING_DUTCHMAN_BURGER.get());
+                if (CosmoCompat.fd)output.accept(CosmoItems.FLYING_DUTCHMAN_BURGER.get());
                 if (CosmoCompat.ug) output.accept(CosmoItems.GLITTERKELP_BURRITO.get());
+                if (CosmoCompat.fd) {
+                    output.accept(CosmoItems.CHARD_ROLLS.get());
+                    output.accept(CosmoItems.DRIPLEAF_ROLL.get());
+                    output.accept(CosmoItems.GLAZED_FISH.get());
+                    output.accept(CosmoItems.GLAZED_FISH_ROLL.get());
+                    if (!CosmoCompat.isTagEmpty(CosmoItemTags.SALMON_EGGS)) output.accept(CosmoItems.FLOWER_LOVE.get());
+                }
 
                 if (!CosmoCompat.isTagEmpty(CosmoItemTags.CATTAILS)) output.accept(CosmoItems.HOT_CATTAIL.get());
                 output.accept(creamyFood(CosmoItems.CREAM_BUN.get()));
+                output.accept(creamyFood(CosmoItems.BERRY_DUO_CREAM_BUN.get()));
                 if (CosmoCompat.nea) {
                     output.accept(creamyFood(CosmoItems.CHOCOLATE_BANANA_CREAM_BUN.get()));
                     output.accept(creamyFood(CosmoItems.STRAWBERRY_VANILLA_CREAM_BUN.get()));
                     output.accept(creamyFood(CosmoItems.ADZUKI_MINT_CREAM_BUN.get()));
                 }
+                if (CosmoCompat.smc) output.accept(creamyFood(CosmoItems.COLORFUL_CREAM_BUN.get()));
+                if (CosmoCompat.cr) output.accept(creamyFood(CosmoItems.ECTOCARAMEL_POMEGRANATE_CREAM_BUN.get()));
+                if (CosmoCompat.fd) output.accept(creamyFood(CosmoItems.MATCHA_SALMONBERRY_CREAM_BUN.get()));
+                if (CosmoCompat.ug) output.accept(creamyFood(CosmoItems.BLISTERBERRY_DROOPFRUIT_CREAM_BUN.get()));
+
                 output.accept(CosmoItems.JELLY_ROLL.get());
                 if (CosmoCompat.fd) output.accept(CosmoItems.JELLY_ROLL_SLICE.get());
                 output.accept(CosmoItems.CHOCOLATE_ROLL.get());
                 if (CosmoCompat.fd) output.accept(CosmoItems.CHOCOLATE_ROLL_SLICE.get());
                 output.accept(CosmoItems.INK_ROLL.get());
                 if (CosmoCompat.fd) output.accept(CosmoItems.INK_ROLL_SLICE.get());
+                if (CosmoCompat.ws) {
+                    output.accept(CosmoItems.YULE_LOG.get());
+                    if (CosmoCompat.wd) output.accept(CosmoItems.YULE_LOG_SLICE.get());
+                }
 
                 output.accept(CosmoItems.WATER_PIE.get());
-                if (CosmoCompat.fd) output.accept(CosmoItems.WATER_PIE_SLICE.get());
+                output.accept(CosmoItems.MOSS_PIE.get());
+                if (CosmoCompat.fd) {
+                    output.accept(CosmoItems.SHOOFLY_PIE.get());
+                    output.accept(CosmoItems.WATER_PIE_SLICE.get());
+                    output.accept(CosmoItems.MOSS_PIE_SLICE.get());
+                    output.accept(CosmoItems.SHOOFLY_PIE_SLICE.get());
+                }
                 if (CosmoCompat.an) {
-                    output.accept(CosmoItems.MAGEBLOOMING_TART.get());
+                    output.accept(CosmoItems.MAGEBLOOM_TART.get());
                     output.accept(CosmoItems.MENDOSTEEN_TART.get());
                 }
                 if (CosmoCompat.ug) output.accept(CosmoItems.BLISTERBERRY_TART.get());
@@ -220,16 +310,29 @@ public class CosmoCreativeTabs {
                 if (CosmoCompat.ug) {
                     output.accept(CosmoItems.RAINDROOP_CAKE.get());
                 }
-                output.accept(CosmoItems.BERRY_CHEESECAKE_BAR.get());
+                if (CosmoCompat.fd) {
+                    output.accept(CosmoItems.SALTED_QINGTUAN.get());
+                    output.accept(CosmoItems.SWEET_QINGTUAN.get());
+                }
+                output.accept(CosmoItems.ORGANIC_MUFFIN.get());
+
+                generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_CHEESECAKE_BAR.get());
                 output.accept(CosmoItems.WHEATGRASS_CUBECAKE.get());
                 output.accept(CosmoItems.GLOW_BERRY_CUBECAKE.get());
                 output.accept(CosmoItems.WARPED_VELVET_CUBECAKE.get());
                 output.accept(CosmoItems.CHORUS_FRUIT_CUBECAKE.get());
 
+                output.accept(CosmoItems.ARBUTUS_BERRY_COOKIE.get());
                 output.accept(CosmoItems.BIRCH_COOKIE.get());
+                output.accept(CosmoItems.HOWLING_COOKIE.get());
+                if (CosmoCompat.fd) output.accept(CosmoItems.MOLASSES_COOKIE.get());
                 output.accept(CosmoItems.PAW_COOKIE.get());
                 generateHerbalFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.HERBAL_COOKIE.get());
 
+                if (CosmoCompat.fd) {
+                    output.accept(CosmoItems.FISH_KEBAB.get());
+                    if (!CosmoCompat.isTagEmpty(CosmoItemTags.STRAWBERRY)) output.accept(CosmoItems.STRAWBERRY_TANGHULU.get());
+                }
                 output.accept(CosmoItems.LLAMA_MARSHMALLOW.get());
                 output.accept(CosmoItems.LLAMA_MARSHMALLOW_BROWN.get());
                 output.accept(CosmoItems.LLAMA_MARSHMALLOW_TRADER.get());
@@ -260,10 +363,11 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoItems.STRAWBERRY_GULIME_SMALL.get());
                     }
                 }
-                if (CosmoCompat.cr || CosmoCompat.df) {
+                if (CosmoCompat.cr) {
                     output.accept(CosmoItems.ARBUTUS_BERRY_GUMMY.get());
-                    output.accept(CosmoItems.BERRY_SYRUP_GUMMY.get());
-                    if (CosmoConfig.Common.CARROT_FLAVOR.get()) output.accept(CosmoItems.CARROT_GUMMY.get());
+                    output.accept(CosmoItems.BOILBERRY_GUMMY.get());
+                    output.accept(CosmoItems.SPINALBERRY_GUMMY.get());
+                    generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_SYRUP_GUMMY.get());
                     if (CosmoCompat.qua && CosmoConfig.Common.ENCHANTED_FRUIT_FLAVOR.get()) output.accept(CosmoItems.ENCHANTED_FRUIT_GUMMY.get());
                     if (CosmoCompat.ha && CosmoConfig.Common.KABLOOM_FLAVOR.get()) output.accept(CosmoItems.KABLOOM_GUMMY.get());
                     if (CosmoCompat.ug) {
@@ -274,32 +378,53 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoItems.MENDOSTEEN_GUMMY.get());
                         output.accept(CosmoItems.BASTION_GUMMY.get());
                     }
+                    if (CosmoCompat.smc) {
+                        output.accept(CosmoItems.ASTERA_GUMMY.get());
+                        output.accept(CosmoItems.BROCCOLI_GUMMY.get());
+                        output.accept(CosmoItems.FROST_GUMMY.get());
+                    }
                 }
 
+                output.accept(CosmoItems.WILDBERRY_MEDLEY.get());
                 output.accept(CosmoItems.CLASSIC_FRUIT_SALAD.get());
                 output.accept(CosmoItems.JELLO_SALAD.get());
                 if (CosmoCompat.an) output.accept(CosmoItems.MANA_SALAD.get());
+                if (CosmoCompat.fd) {
+                    if (!CosmoCompat.isTagEmpty(CosmoItemTags.STRAWBERRY)) output.accept(creamyFood(CosmoItems.ETON_MESS.get()));
+                    output.accept(creamyFood(CosmoItems.MOJANG_MESS.get()));
+                }
+
                 output.accept(CosmoItems.MASHED_POTATO.get());
                 output.accept(CosmoItems.TUBER_PUREE.get());
                 output.accept(CosmoItems.TUBER_PUREE_WITH_CONFITURE.get());
+                output.accept(CosmoItems.POPWART.get());
+
                 if (CosmoCompat.fd) {
                     output.accept(CosmoItems.GREEN_SAUCE.get());
+                    output.accept(CosmoItems.FARINA.get());
                     output.accept(CosmoItems.GREEN_CREAM_STEW.get());
                     output.accept(CosmoItems.ABC_SOUP.get());
                 }
                 output.accept(CosmoItems.LUSH_STEW.get());
                 output.accept(CosmoItems.STOBHACH_GAELACH.get());
                 if (CosmoCompat.fd) {
-                    output.accept(CosmoItems.GREEN_PASTA.get());
                     output.accept(CosmoItems.WILD_RISOTTO.get());
+                    output.accept(CosmoItems.BEETROOT_MIXED_RICE.get());
                     output.accept(CosmoItems.COUSCOUS_WITH_VEGETABLES.get());
+                    output.accept(CosmoItems.COUSCOUS_WITH_MUTTON.get());
+                    output.accept(CosmoItems.BAKED_COD_WITH_MASHED_POTATOES.get());
+
+                    output.accept(CosmoItems.GREEN_PASTA.get());
+                    output.accept(CosmoItems.SPAGHETTIEIS.get());
+
+                    output.accept(CosmoItems.RODGROD.get());
                     output.accept(CosmoItems.RICE_PUDDING.get());
                     output.accept(creamyFood(CosmoItems.TRIFLE.get()));
+                    if (!CosmoCompat.isTagEmpty(CosmoItemTags.CHOCOLATE)) output.accept(creamyFood(CosmoItems.ZEBRA_CAKE.get()));
                 }
                 if (CosmoCompat.md) {
                     output.accept(CosmoItems.JELLO_SALAD_CUP.get());
                     output.accept(CosmoItems.ABC_SOUP_CUP.get());
-                    output.accept(CosmoItems.GREEN_CREAM_STEW_CUP.get());
                     output.accept(CosmoItems.LUSH_STEW_CUP.get());
                     output.accept(CosmoItems.STOBHACH_GAELACH_CUP.get());
                 }
@@ -309,51 +434,83 @@ public class CosmoCreativeTabs {
                 output.accept(CosmoItems.CREAM_BUCKET.get());
                 output.accept(CosmoItems.CREAM.get());
                 output.accept(CosmoItems.BIRCH_SAP_BOTTLE.get());
-                output.accept(CosmoItems.BERRY_SYRUP_BOTTLE.get());
+                output.accept(CosmoItems.FUNGUIS_BOTTLE.get());
+                if (CosmoCompat.ja) {
+                    output.accept(CosmoItems.WARPED_FUNGUIS_BOTTLE.get());
+                    if (CosmoCompat.gd) output.accept(CosmoItems.SOULBLIGHT_FUNGUIS_BOTTLE.get());
+                }
+                if (CosmoCompat.fd) output.accept(CosmoItems.MOLASSES_BOTTLE.get());
+                generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_SYRUP_BOTTLE.get());
                 output.accept(CosmoItems.LUSH_CONFITURE_BOTTLE.get());
                 if (CosmoCompat.tf) output.accept(CosmoItems.STEELEAF_NECTAR.get());
+                output.accept(CosmoItems.SUGARCANE_JUICE.get());
+
                 if (CosmoCompat.fd) {
                     output.accept(CosmoItems.SPRING_SODA.get());
                     output.accept(CosmoItems.SUMMER_CORDIAL.get());
                     output.accept(CosmoItems.AUTUMN_TEA.get());
                     output.accept(CosmoItems.WINTER_GLOGG.get());
-                }
-                if (CosmoCompat.cr) output.accept(CosmoItems.GREENDAY_JUICE.get());
-                if (CosmoCompat.an) output.accept(CosmoItems.CHARMED_INFUSION.get());
-                generateHerbalFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.TISANE.get());
-                if (CosmoCompat.bnc) {
-                    output.accept(CosmoItems.ROOT_BEER.get());
-                    output.accept(CosmoItems.WILDBERRY_PUNCH.get());
-                    if (CosmoCompat.tf) output.accept(CosmoItems.TWILIGHT_CHARTREUSE.get());
-                    if (CosmoCompat.ug) output.accept(CosmoItems.SMOGGY_APEROL.get());
+                    if (CosmoCompat.cr) output.accept(CosmoItems.GREENDAY_JUICE.get());
+                    if (CosmoCompat.an) output.accept(CosmoItems.CHARMED_INFUSION.get());
+                    if (CosmoCompat.ws) output.accept(CosmoItems.MATE.get());
+                    generateHerbalFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.TISANE.get());
                 }
 
-                output.accept(CosmoItems.KYKEON.get());
+                if (CosmoCompat.bnc) {
+                    output.accept(CosmoItems.ROOT_BEER.get());
+                    output.accept(CosmoItems.GREEN_BEER.get());
+                    output.accept(CosmoItems.WILDBERRY_PUNCH.get());
+                    output.accept(CosmoItems.CACHACA.get());
+                    output.accept(CosmoItems.GENERIC_ROMANCE.get());
+                    if (CosmoCompat.tf) output.accept(CosmoItems.TWILIGHT_CHARTREUSE.get());
+                    if (CosmoCompat.ug) {
+                        output.accept(CosmoItems.SMOGGY_APEROL.get());
+                        if (CosmoCompat.tf) output.accept(CosmoItems.EXOTIC_MIRAGE.get());
+                    }
+                    if (CosmoCompat.ex && CosmoCompat.an) {
+                        output.accept(CosmoItems.NEVERENDING_NIGHT.get());
+                        output.accept(CosmoItems.MORNING_FOG.get());
+                    }
+                }
+
                 output.accept(CosmoItems.COSMOPOLITAN_COCKTAIL.get());
                 output.accept(CosmoItems.ENCHANTED_COSMOPOLITAN_COCKTAIL.get());
 
-                if (CosmoCompat.rf && CosmoCompat.nea) {
-                    output.accept(CosmoItems.ICED_AMERICANO.get());
-                    output.accept(CosmoItems.BERRY_SYRUP_AMERICANO.get());
-                    output.accept(CosmoItems.CHORUS_FRUIT_AMERICANO.get());
-                    if (!CosmoCompat.isTagEmpty(CosmoItemTags.ORANGE)) output.accept(CosmoItems.ORANGE_AMERICANO.get());
-                    output.accept(CosmoItems.MOCHA.get());
+                output.accept(CosmoItems.DANDELION_COFFEE.get());
+
+                output.accept(CosmoItems.NETHERESSO.get());
+                output.accept(CosmoItems.ICED_AMERICANO.get());
+                generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_SYRUP_AMERICANO.get());
+                output.accept(CosmoItems.CHORUS_FRUIT_AMERICANO.get());
+                if (!CosmoCompat.isTagEmpty(CosmoItemTags.ORANGE)) output.accept(CosmoItems.ORANGE_AMERICANO.get());
+                if (CosmoCompat.smc) output.accept(CosmoItems.BROCCOLI_AMERICANO.get());
+
+                output.accept(cMilkFood(CosmoItems.CHA_JAU.get()));
+                if (CosmoCompat.nea) {
+                    output.accept(creamyFood(CosmoItems.MOCHA.get()));
                     output.accept(CosmoItems.STRAWBERRY_MATCHA_LATTE.get());
                 }
 
-                //ice_dessert
+                    //ice_dessert
                 if (CosmoCompat.nea) {
                     if (CosmoConfig.Common.APPLE_FLAVOR.get()) output.accept(CosmoItems.APPLE_MILKSHAKE.get());
                     if (CosmoConfig.Common.CARROT_FLAVOR.get()) output.accept(CosmoItems.CARROT_MILKSHAKE.get());
-                    if (CosmoConfig.Common.GLOW_BERRY_FLAVOR.get()) output.accept(CosmoItems.GLOW_BERRY_MILKSHAKE.get());
-                    output.accept(CosmoItems.BERRY_SYRUP_MILKSHAKE.get());
-                    if (CosmoCompat.qua && CosmoConfig.Common.ENCHANTED_FRUIT_FLAVOR.get()) output.accept(CosmoItems.ENCHANTED_FRUIT_MILKSHAKE.get());
-                    if (CosmoCompat.an && CosmoConfig.Common.SOURCE_BERRY_FLAVOR.get()) output.accept(CosmoItems.SOURCE_BERRY_MILKSHAKE.get());
-                    if (CosmoCompat.ha && CosmoConfig.Common.KABLOOM_FLAVOR.get()) output.accept(CosmoItems.KABLOOM_MILKSHAKE.get());
+                    if (CosmoConfig.Common.GLOW_BERRY_FLAVOR.get())
+                        output.accept(CosmoItems.GLOW_BERRY_MILKSHAKE.get());
+                    if (CosmoCompat.qua && CosmoConfig.Common.ENCHANTED_FRUIT_FLAVOR.get())
+                        output.accept(CosmoItems.ENCHANTED_FRUIT_MILKSHAKE.get());
+                    if (CosmoCompat.an && CosmoConfig.Common.SOURCE_BERRY_FLAVOR.get())
+                        output.accept(CosmoItems.SOURCE_BERRY_MILKSHAKE.get());
+                    if (CosmoCompat.ha && CosmoConfig.Common.KABLOOM_FLAVOR.get())
+                        output.accept(CosmoItems.KABLOOM_MILKSHAKE.get());
 
                     if (CosmoCompat.fd) output.accept(CosmoItems.ICE_CREAM_FLOAT.get());
                     if (CosmoCompat.bnc) output.accept(CosmoItems.BLACK_COW.get());
+                }
 
+                    generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_SYRUP_SHAVED_ICE.get());
+
+                    if (CosmoCompat.nea) {
                     if (CosmoCompat.ug) {
                         output.accept(CosmoItems.BLISTERBERRY_SORBET.get());
                         output.accept(CosmoItems.DROOPFRUIT_SORBET.get());
@@ -362,7 +519,6 @@ public class CosmoCreativeTabs {
                     if (CosmoConfig.Common.APPLE_FLAVOR.get()) output.accept(CosmoItems.APPLE_ICE_CREAM.get());
                     if (CosmoConfig.Common.CARROT_FLAVOR.get()) output.accept(CosmoItems.CARROT_ICE_CREAM.get());
                     if (CosmoConfig.Common.GLOW_BERRY_FLAVOR.get()) output.accept(CosmoItems.GLOW_BERRY_ICE_CREAM.get());
-                    output.accept(CosmoItems.BERRY_SYRUP_ICE_CREAM.get());
                     if (CosmoCompat.qua && CosmoConfig.Common.ENCHANTED_FRUIT_FLAVOR.get()) output.accept(CosmoItems.ENCHANTED_FRUIT_ICE_CREAM.get());
                     if (CosmoCompat.an && CosmoConfig.Common.SOURCE_BERRY_FLAVOR.get()) output.accept(CosmoItems.SOURCE_BERRY_ICE_CREAM.get());
                     if (CosmoCompat.ha && CosmoConfig.Common.KABLOOM_FLAVOR.get()) output.accept(CosmoItems.KABLOOM_ICE_CREAM.get());
@@ -374,27 +530,39 @@ public class CosmoCreativeTabs {
                     if (CosmoCompat.df && CosmoCompat.an)  output.accept(CosmoItems.DELIGHTFUL_ICE_CREAM.get());
                 }
                 //cones
-                output.accept(CosmoItems.BERRY_DOUBLE_POPSICLE.get());
-                output.accept(CosmoItems.BERRY_POPSICLE.get());
+                generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_DOUBLE_POPSICLE.get());
                 output.accept(CosmoItems.CHORUS_FRUIT_DOUBLE_POPSICLE.get());
-                output.accept(CosmoItems.CHORUS_FRUIT_POPSICLE.get());
-                if (CosmoCompat.ug) {
-                    output.accept(CosmoItems.BLISTERBERRY_DOUBLE_POPSICLE.get());
-                    output.accept(CosmoItems.BLISTERBERRY_POPSICLE.get());
-                }
-                if (CosmoCompat.cr)  {
-                    output.accept(CosmoItems.LIME_DOUBLE_POPSICLE.get());
-                    output.accept(CRItems.LIME_POPSICLE.get());
-                }
+                if (CosmoCompat.ug) output.accept(CosmoItems.BLISTERBERRY_DOUBLE_POPSICLE.get());
+                if (CosmoCompat.cr) output.accept(CosmoItems.LIME_DOUBLE_POPSICLE.get());
                 if (CosmoCompat.an) {
                     output.accept(CosmoItems.ARDENT_SPLIT_POPSICLE_DOUBLE.get());
-                    output.accept(CosmoItems.ARDENT_SPLIT_POPSICLE.get());
                     output.accept(CosmoItems.TRANQUIL_SPLIT_POPSICLE_DOUBLE.get());
+                }
+                if (CosmoCompat.fr)  output.accept(CosmoItems.GAMBLERS_POPSICLE_DOUBLE.get());
+
+                generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_POPSICLE.get());
+                output.accept(CosmoItems.CHORUS_FRUIT_POPSICLE.get());
+                if (CosmoCompat.ug) output.accept(CosmoItems.BLISTERBERRY_POPSICLE.get());
+                if (CosmoCompat.cr) output.accept(CRItems.LIME_POPSICLE.get());
+                if (CosmoCompat.an) {
+                    output.accept(CosmoItems.ARDENT_SPLIT_POPSICLE.get());
                     output.accept(CosmoItems.TRANQUIL_SPLIT_POPSICLE.get());
                 }
-                if (CosmoCompat.fr)  {
-                    output.accept(CosmoItems.GAMBLERS_POPSICLE_DOUBLE.get());
-                    output.accept(CosmoItems.GAMBLERS_POPSICLE.get());
+                if (CosmoCompat.fr)  output.accept(CosmoItems.GAMBLERS_POPSICLE.get());
+
+                output.accept(CosmoItems.CAVE_CONE.get());
+                if (CosmoCompat.ac) {
+                    output.accept(CosmoItems.MAGNETIC_CAVE_CONE.get());
+                    output.accept(CosmoItems.PRIMORDIAL_CAVE_CONE.get());
+                    output.accept(CosmoItems.TOXIC_CAVE_CONE.get());
+                    output.accept(CosmoItems.ABYSSAL_CAVE_CONE.get());
+                    output.accept(CosmoItems.FORLORN_CAVE_CONE.get());
+                    output.accept(CosmoItems.CANDY_CAVE_CONE.get());
+                }
+
+                if (CosmoCompat.ws) {
+                    output.accept(CosmoItems.ACACIA_SNOW_CONE.get());
+                    output.accept(CosmoItems.LUSH_SNOW_CONE.get());
                 }
                 output.accept(CosmoItems.WAFER.get());
                 if (CosmoCompat.nea) {
@@ -403,7 +571,10 @@ public class CosmoCreativeTabs {
                     if (CosmoCompat.pec) output.accept(CosmoItems.PECULIAR_ICE_CREAM_SANDWICH.get());
                     if (CosmoCompat.sea) output.accept(CosmoItems.SEASONAL_ICE_CREAM_SANDWICH.get());
                     if (CosmoCompat.ex) output.accept(CosmoItems.EXQUISITE_ICE_CREAM_SANDWICH.get());
-                    if (CosmoCompat.cr) output.accept(CosmoItems.COLLECTIVE_ICE_CREAM_SANDWICH.get());
+                    if (CosmoCompat.cr) {
+                        output.accept(CosmoItems.COLLECTIVE_ICE_CREAM_SANDWICH.get());
+                        output.accept(CosmoItems.SUNNY_ICE_CREAM_SANDWICH.get());
+                    }
                     if (CosmoCompat.df && CosmoCompat.an)  output.accept(CosmoItems.DELIGHTFUL_ICE_CREAM_SANDWICH.get());
                     if (CosmoCompat.tfd) {
                         output.accept(CosmoItems.RAINBOW_ICE_CREAM_SANDWICH.get());
@@ -412,14 +583,25 @@ public class CosmoCreativeTabs {
                     }
                     if (CosmoCompat.rf) output.accept(CosmoItems.RESPITEFUL_ICE_CREAM_SANDWICH.get());
                     if (CosmoCompat.sud) output.accept(CosmoItems.TRICOLORED_ICE_CREAM_SANDWICH.get());
+                    if (CosmoCompat.smc) {
+                        output.accept(CosmoItems.RAINBOW_ICE_CREAM_SANDWICH_SMC.get());
+                        output.accept(CosmoItems.SMC_ICE_CREAM_SANDWICH.get());
+                    }
                 }
                 output.accept(CosmoItems.WAFER_CONE.get());
                 output.accept(CosmoItems.MASHED_POTATO_CONE.get());
                 output.accept(CosmoItems.TUBER_PUREE_CONE.get());
                 output.accept(CosmoItems.TUBER_PUREE_CONE_WITH_CONFITURE.get());
+                output.accept(CosmoItems.SLIME_CONE.get());
+                output.accept(CosmoItems.GHOSTCREAM.get());
+                if (CosmoCompat.ja) {
+                    output.accept(CosmoItems.WARPED_GHOSTCREAM.get());
+                    if (CosmoCompat.gd) output.accept(CosmoItems.SOULBLIGHT_GHOSTCREAM.get());
+                }
                 output.accept(CosmoItems.SNOW_CONE.get());
                 if (CosmoCompat.el) output.accept(CosmoItems.COSMIC_SNOW_CONE.get());
                 output.accept(CosmoItems.WANDERING_GELATO.get());
+                if (!CosmoCompat.isTagEmpty(CosmoItemTags.ICE_CUBE)) generateFlavoredFood(output, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS, CosmoItems.BERRY_SYRUP_SHAVED_ICE_CONE.get());
                 if (CosmoCompat.nea) {
                     output.accept(CosmoItems.ADZUKI_ICE_CREAM_CONE.get());
                     output.accept(CosmoItems.BANANA_ICE_CREAM_CONE.get());
@@ -430,7 +612,6 @@ public class CosmoCreativeTabs {
                     if (CosmoConfig.Common.APPLE_FLAVOR.get()) output.accept(CosmoItems.APPLE_ICE_CREAM_CONE.get());
                     if (CosmoConfig.Common.CARROT_FLAVOR.get()) output.accept(CosmoItems.CARROT_ICE_CREAM_CONE.get());
                     if (CosmoConfig.Common.GLOW_BERRY_FLAVOR.get()) output.accept(CosmoItems.GLOW_BERRY_ICE_CREAM_CONE.get());
-                    output.accept(CosmoItems.BERRY_SYRUP_ICE_CREAM_CONE.get());
                     if (CosmoCompat.qua && CosmoConfig.Common.ENCHANTED_FRUIT_FLAVOR.get()) output.accept(CosmoItems.ENCHANTED_FRUIT_ICE_CREAM_CONE.get());
                     if (CosmoCompat.an && (CosmoConfig.Common.SOURCE_BERRY_FLAVOR.get() || CosmoCompat.df)) output.accept(CosmoItems.SOURCE_BERRY_ICE_CREAM_CONE.get());
                     if (CosmoCompat.ha && CosmoConfig.Common.KABLOOM_FLAVOR.get()) output.accept(CosmoItems.KABLOOM_ICE_CREAM_CONE.get());
@@ -456,6 +637,7 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoItems.LIME_ICE_CREAM_CONE.get());
                         output.accept(CosmoItems.POMEGRANATE_ICE_CREAM_CONE.get());
                         output.accept(CosmoItems.PINK_DRAGON_FRUIT_ICE_CREAM_CONE.get());
+                        output.accept(CosmoItems.LUCUMA_ICE_CREAM_CONE.get());
                     }
                     if (CosmoCompat.df) {
                         output.accept(CosmoItems.MATCHA_ICE_CREAM_CONE.get());
@@ -478,7 +660,13 @@ public class CosmoCreativeTabs {
                         output.accept(CosmoItems.GLOWY_ICE_CREAM_CONE.get());
                     }
                     if (CosmoCompat.sd) output.accept(CosmoItems.CHERRY_ICE_CREAM_CONE.get());
+                    if (CosmoCompat.smc) {
+                        output.accept(CosmoItems.ASTERA_ICE_CREAM_CONE.get());
+                        output.accept(CosmoItems.BROCCOLI_ICE_CREAM_CONE.get());
+                        output.accept(CosmoItems.FROST_ICE_CREAM_CONE.get());
+                    }
                 }
+                if (CosmoConfig.Common.FLAVORED_SYRUP.get()) output.accept(CosmoItems.MUSIC_DISC_WOC.get());
             })
             .build());
 
@@ -486,6 +674,29 @@ public class CosmoCreativeTabs {
         ItemStack stack = item.getDefaultInstance();
         stack.getOrCreateTag().putBoolean("has_cream", true);
         return stack;
+    }
+
+    private static ItemStack cMilkFood(Item item) {
+        ItemStack stack = item.getDefaultInstance();
+        stack.getOrCreateTag().putBoolean("has_condensed_milk", true);
+        return stack;
+    }
+
+
+    private static void generateFlavoredFood(CreativeModeTab.Output output, CreativeModeTab.TabVisibility visibility, Item food) {
+        if (CosmoConfig.Common.FLAVORED_SYRUP.get()) {
+            Set<ItemStack> set = ItemStackLinkedSet.createTypeAndTagSet();
+
+            for (String flavor : BerrfectFlavorHelper.FLAVORS) {
+                ItemStack stack = new ItemStack(food);
+                stack.getOrCreateTag().putString(BerrfectFlavorHelper.KEY, flavor);
+                set.add(stack);
+            }
+
+            output.acceptAll(set, visibility);
+        } else {
+            output.accept(food);
+        }
     }
 
     private static void generateHerbalFood(CreativeModeTab.Output output, CreativeModeTab.TabVisibility visibility, Item Food) {

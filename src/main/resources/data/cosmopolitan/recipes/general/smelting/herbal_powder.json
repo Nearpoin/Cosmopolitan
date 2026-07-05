@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:smelting",
+  "conditions": [
+    {
+      "type": "forge:not",
+      "value":             {
+        "type": "forge:mod_loaded",
+        "modid": "farmersdelight"
+      }
+    }
+  ],
+  "ingredient": {
+    "tag": "cosmopolitan:herbal_powder_ingredients"
+  },
+  "result": "cosmopolitan:herbal_powder",
+  "experience": 0.35,
+  "cookingtime": 400
+}

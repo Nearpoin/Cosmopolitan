@@ -1,6 +1,12 @@
 {
   "values": [
+    {
+      "id": "smc:frost_berries",
+      "required": false
+    },
     "cosmopolitan:wildberry",
+    "cosmopolitan:spinalberry",
+    "cosmopolitan:boilberry",
     "cosmopolitan:arbutus_berries"
   ]
 }

@@ -22,7 +22,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyExplosionDecay;
 import net.minecraft.world.level.storage.loot.functions.CopyNameFunction;
 import net.minecraft.world.level.storage.loot.functions.CopyNbtFunction;
-import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
 import net.minecraft.world.level.storage.loot.providers.nbt.ContextNbtProvider;
@@ -53,6 +52,10 @@ public class CosmoLootTableProvider extends LootTableProvider {
 
         @Override
         public void generate() {
+            this.dropSelf(CosmoBlocks.EXHAUSTED_SHROOMLIGHT.get());
+            this.dropSelf(CosmoBlocks.EXHAUSTED_SHROOMNIGHT.get());
+            this.dropSelf(CosmoBlocks.EXHAUSTED_SHROOMBLIGHT.get());
+
             this.dropSelf(CosmoBlocks.BIRCH_COOKIE_TILE.get());
             this.add(CosmoBlocks.BIRCH_COOKIE_TILE_SLAB.get(), this::createSlabItemTable);
             this.dropSelf(CosmoBlocks.BIRCH_COOKIE_TILE_STAIRS.get());
@@ -107,6 +110,12 @@ public class CosmoLootTableProvider extends LootTableProvider {
             this.dropSelf(CosmoBlocks.YELLOW_TEA_ICE_CREAM_BRICKS.get());
             this.dropSelf(CosmoBlocks.BLACK_TEA_ICE_CREAM_BRICKS.get());
             this.dropSelf(CosmoBlocks.COFFEE_ICE_CREAM_BRICKS.get());
+            this.dropSelf(CosmoBlocks.ASTERA_ICE_CREAM_BRICKS.get());
+            this.dropSelf(CosmoBlocks.BROCCOLI_ICE_CREAM_BRICKS.get());
+            this.dropSelf(CosmoBlocks.FROST_ICE_CREAM_BRICKS.get());
+            this.dropSelf(CosmoBlocks.RAINBOW_ICE_CREAM_BRICKS.get());
+            this.dropSelf(CosmoBlocks.PINK_DRAGON_FRUIT_ICE_CREAM_BRICKS.get());
+            this.dropSelf(CosmoBlocks.LUCUMA_ICE_CREAM_BRICKS.get());
 
             this.dropSelf(CosmoBlocks.CHISELED_VANILLA_ICE_CREAM_BLOCK.get());
             this.dropSelf(CosmoBlocks.CHISELED_ADZUKI_ICE_CREAM_BLOCK.get());
@@ -127,6 +136,10 @@ public class CosmoLootTableProvider extends LootTableProvider {
             this.dropSelf(CosmoBlocks.ENCHANTED_FRUIT_ICE_CREAM_BLOCK.get());
             this.dropSelf(CosmoBlocks.KABLOOM_ICE_CREAM_BLOCK.get());
             this.dropSelf(CosmoBlocks.SOURCE_BERRY_ICE_CREAM_BLOCK.get());
+            this.dropSelf(CosmoBlocks.ASTERA_ICE_CREAM_BLOCK.get());
+            this.dropSelf(CosmoBlocks.BROCCOLI_ICE_CREAM_BLOCK.get());
+            this.dropSelf(CosmoBlocks.FROST_ICE_CREAM_BLOCK.get());
+            this.dropSelf(CosmoBlocks.RAINBOW_ICE_CREAM_BLOCK.get());
 
             this.dropSelf(CosmoBlocks.SAPPY_BIRCH_LOG.get());
             this.dropSelf(CosmoBlocks.MASHED_POTATO_BLOCK.get());
@@ -138,10 +151,17 @@ public class CosmoLootTableProvider extends LootTableProvider {
             this.dropSelf(CosmoBlocks.FIDDLEHEAD_CRATE.get());
             this.dropSelf(CosmoBlocks.IRON_FIDDLEHEAD_CRATE.get());
             this.dropSelf(CosmoBlocks.TUBER_CRATE.get());
+            this.dropSelf(CosmoBlocks.WATTLESEED_SACK.get());
 
-            this.dropSelf(CosmoBlocks.BERRY_SYRUP_BLOCK.get());
+            this.dropSelf(CosmoBlocks.SWEET_BERRY_SYRUP_BLOCK.get());
+            this.dropSelf(CosmoBlocks.SOUR_BERRY_SYRUP_BLOCK.get());
+            this.dropSelf(CosmoBlocks.SPICY_BERRY_SYRUP_BLOCK.get());
+            this.dropSelf(CosmoBlocks.BITTER_BERRY_SYRUP_BLOCK.get());
+            this.dropSelf(CosmoBlocks.STRANGE_BERRY_SYRUP_BLOCK.get());
+
             this.dropSelf(CosmoBlocks.BIRCH_SAP_BLOCK.get());
             this.dropSelf(CosmoBlocks.STEELEAF_NECTAR_BLOCK.get());
+            this.dropSelf(CosmoBlocks.MOLASSES_BLOCK.get());
 
             this.dropCauldron(CosmoBlocks.APPLE_MILKSHAKE_CAULDRON.get());
             this.dropCauldron(CosmoBlocks.CARROT_MILKSHAKE_CAULDRON.get());
@@ -155,10 +175,16 @@ public class CosmoLootTableProvider extends LootTableProvider {
             this.dropTub(CosmoBlocks.NETHERITE_FROZEN_DESSERT_TUB.get());
 
             this.dropNothing(CosmoBlocks.WATER_PIE.get());
+            this.dropNothing(CosmoBlocks.SHOOFLY_PIE.get());
+            this.dropNothing(CosmoBlocks.MOSS_PIE.get());
             this.dropNothing(CosmoBlocks.GLOW_BERRY_CUBECAKE.get());
             this.dropNothing(CosmoBlocks.WHEATGRASS_CUBECAKE.get());
             this.dropNothing(CosmoBlocks.CHORUS_FRUIT_CUBECAKE.get());
             this.dropNothing(CosmoBlocks.WARPED_VELVET_CUBECAKE.get());
+            this.dropNothing(CosmoBlocks.JELLY_ROLL.get());
+            this.dropNothing(CosmoBlocks.INK_ROLL.get());
+            this.dropNothing(CosmoBlocks.CHOCOLATE_ROLL.get());
+            this.dropNothing(CosmoBlocks.YULE_LOG.get());
 
             this.dropNothing(CosmoBlocks.GLOW_PETALS.get());
             this.dropNothing(CosmoBlocks.LIFELIGHT.get());
